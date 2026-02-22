@@ -1,5 +1,6 @@
 // index.js
 require('dotenv').config();
+const http = require('http');
 const { Client, GatewayIntentBits, Events, InteractionType, PermissionsBitField } = require('discord.js');
 const data = require('./data');
 const db = require('./db');
@@ -216,6 +217,18 @@ client.on(Events.InteractionCreate, async (interaction) => {
       });
     }
   }
+});
+
+// ─── KEEP-ALIVE HTTP SERVER (required for Render Web Service free tier) ─────────
+// Render's free Web Service expects an open port. This tiny server satisfies
+// that check without affecting the bot in any way.
+const http = require('http');
+const PORT = process.env.PORT || 3000;
+http.createServer((_, res) => {
+  res.writeHead(200);
+  res.end('Bot is running.');
+}).listen(PORT, () => {
+  console.log(`🌐  Health-check server listening on port ${PORT}`);
 });
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
