@@ -222,7 +222,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // ─── KEEP-ALIVE HTTP SERVER (required for Render Web Service free tier) ─────────
 // Render's free Web Service expects an open port. This tiny server satisfies
 // that check without affecting the bot in any way.
-const http = require('http');
 const PORT = process.env.PORT || 3000;
 http.createServer((_, res) => {
   res.writeHead(200);
