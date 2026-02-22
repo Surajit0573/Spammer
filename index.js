@@ -68,7 +68,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     let   amount   = interaction.options.getInteger('amount', true);
 
     // ── 1. Check timeout ───────────────────────────────────────────────────
-    if (db.isTimedOut(guild.id, invoker.id)) {
+    if (await db.isTimedOut(guild.id, invoker.id)) {
       return interaction.reply({
         content: '🚫 You have been timed out from using `/spam` in this server.',
         ephemeral: true,
@@ -76,7 +76,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
 
     // ── 2. Check custom limit ──────────────────────────────────────────────
-    const customMax = db.getLimit(guild.id, invoker.id);
+    const customMax = await db.getLimit(guild.id, invoker.id);
     if (customMax !== null && amount > customMax) {
       return interaction.reply({
         content: `⚠️ An admin has restricted your max ping amount to **${customMax}** in this server. Reducing your request accordingly.`,
@@ -179,7 +179,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       const action     = interaction.options.getString('action', true);
 
       if (action === 'add') {
-        db.addTimeout(guild.id, targetUser.id);
+        await db.addTimeout(guild.id, targetUser.id);
         return interaction.reply({
           content: `🚫 **${targetUser.tag}** has been timed out from using \`/spam\` in this server.`,
           ephemeral: true,
@@ -187,7 +187,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       }
 
       if (action === 'remove') {
-        db.removeTimeout(guild.id, targetUser.id);
+        await db.removeTimeout(guild.id, targetUser.id);
         return interaction.reply({
           content: `✅ Timeout lifted for **${targetUser.tag}**. They can use \`/spam\` again.`,
           ephemeral: true,
@@ -202,14 +202,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
       if (max === null || max === undefined) {
         // Clear any existing limit
-        db.removeLimit(guild.id, targetUser.id);
+        await db.removeLimit(guild.id, targetUser.id);
         return interaction.reply({
           content: `✅ Custom limit cleared for **${targetUser.tag}**. They are subject to the default maximum (25).`,
           ephemeral: true,
         });
       }
 
-      db.setLimit(guild.id, targetUser.id, max);
+      await db.setLimit(guild.id, targetUser.id, max);
       return interaction.reply({
         content: `✅ **${targetUser.tag}**'s max ping amount in this server is now set to **${max}**.`,
         ephemeral: true,

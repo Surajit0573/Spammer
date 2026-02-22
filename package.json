@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@discordjs/rest": "^2.3.0",
+    "@upstash/redis": "^1.31.0",
     "discord-api-types": "^0.37.83",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5"
