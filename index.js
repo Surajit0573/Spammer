@@ -1,7 +1,7 @@
 // index.js
 require('dotenv').config();
 const http = require('http');
-const { Client, GatewayIntentBits, Events, InteractionType, PermissionsBitField } = require('discord.js');
+const { Client, GatewayIntentBits, Events, InteractionType, PermissionsBitField, ActivityType } = require('discord.js');
 const data = require('./data');
 const db = require('./db');
 
@@ -39,10 +39,18 @@ function pickUnique(arr, n) {
 // ─── CLIENT ──────────────────────────────────────────────────────────────────
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
+  presence: {
+    status: 'online',
+    activities: [{ name: '/spam', type: ActivityType.Watching }],
+  },
 });
 
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`✅  Logged in as ${readyClient.user.tag}`);
+  readyClient.user.setPresence({
+    status: 'online',
+    activities: [{ name: '/spam', type: ActivityType.Watching }],
+  });
 });
 
 // ─── INTERACTION HANDLER ─────────────────────────────────────────────────────
