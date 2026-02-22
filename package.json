@@ -1,0 +1,16 @@
+{
+  "name": "birthday-spam-bot",
+  "version": "2.0.0",
+  "description": "Multi-server Discord spam bot built with discord.js v14",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^2.3.0",
+    "discord-api-types": "^0.37.83",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5"
+  }
+}

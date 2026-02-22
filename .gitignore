@@ -1,0 +1,4 @@
+node_modules/
+.env
+spambot-db.json
+spambot-db.json.tmp
